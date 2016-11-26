@@ -99,12 +99,12 @@ public class configurationWindowController {
 		globalCostLocationTextField.setPromptText("Some default cost location");
 		
 		// Local Cost Influence Slider
-		localCostLabel.setText(String.format("%.0f", localCostInfluenceSlider.getValue()));
+		localCostLabel.setText(String.format("%.1f", localCostInfluenceSlider.getValue()));
 		localCostInfluenceSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov,
 					Number old_val, Number new_val) {
 				localCostInfluenceSlider.setValue(new_val.intValue());
-				localCostLabel.setText(String.format("%.0f", new_val));
+				localCostLabel.setText(String.format("%.1f", new_val));
 			}
 		});
 
