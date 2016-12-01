@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -84,8 +85,8 @@ public class configurationWindowController {
 		return algorithmComboBox.getValue();
 	}
 	
-	public Double getNumberOfIterations(){
-		return Double.parseDouble(numberOfIterationsLabel.getText().toString());
+	public int getNumberOfIterations(){
+		return Integer.parseInt(numberOfIterationsLabel.getText());
 	}
 	
 	public int getNumberOfChildren(){
@@ -104,7 +105,7 @@ public class configurationWindowController {
 	private void setDefaultsConfigurationWindow(){
 		
 		// Data Set Location
-		dataSetLocationTextField.setPromptText("Some default location");
+		dataSetLocationTextField.setPromptText("datasets/");
 		
 		// Global Cost Location
 		globalCostLocationTextField.setPromptText("Some default cost location");
@@ -169,10 +170,10 @@ public class configurationWindowController {
 	
 	@FXML
     private void handleBrowseGlobalCostLocation(ActionEvent e){
-    	DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("This is my file ch");
+    	FileChooser fileChooser = new FileChooser();
+    	fileChooser.setTitle("This is my file ch");
         //Show open file dialog
-        File file = directoryChooser.showDialog(null);
+        File file = fileChooser.showOpenDialog(null);
 
        if(file!=null)
             globalCostLocationTextField.setText(file.getPath());
@@ -195,7 +196,7 @@ public class configurationWindowController {
 					"local cost influence: " + getLocalCostInfluence().toString() + "\n" +
 					"algorithm: " + getAlgorithm() + "\n" +
 					"number of children: " + getNumberOfChildren() + "\n" +
-					"number of iterations: " + getNumberOfIterations().toString() + "\n" +
+					"number of iterations: " + getNumberOfIterations() + "\n" +
 					"seed: " + getSeed());
 			if (answer == true){
 				
