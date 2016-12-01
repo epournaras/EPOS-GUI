@@ -4,6 +4,8 @@
 package controller.view;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import Utilities.ConfirmBox;
 import controller.MainApplication;
@@ -19,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 /**
  * @author melikaayoughi
@@ -42,6 +45,10 @@ public class configurationWindowController {
 	private Label localCostLabel;
 	@FXML
 	private ComboBox<String> algorithmComboBox;
+	@FXML
+	private Slider numberOfChildrenSlider;
+	@FXML
+	private Label numberOfChildrenLabel;
 	@FXML
 	private Slider numberOfIterationsSlider;
 	@FXML
@@ -81,6 +88,10 @@ public class configurationWindowController {
 		return Double.parseDouble(numberOfIterationsLabel.getText().toString());
 	}
 	
+	public int getNumberOfChildren(){
+		return Integer.parseInt(numberOfChildrenLabel.getText());
+	}
+	
 	public String getSeed(){
 		if(!seedTextField.getText().isEmpty())
 			return seedTextField.getText();
@@ -103,7 +114,11 @@ public class configurationWindowController {
 		localCostInfluenceSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov,
 					Number old_val, Number new_val) {
-				localCostInfluenceSlider.setValue(new_val.intValue());
+				Double toBeTruncated = new Double(new_val.doubleValue());
+				Double truncatedDouble = BigDecimal.valueOf(toBeTruncated)
+					    .setScale(1, RoundingMode.HALF_UP)
+					    .doubleValue();
+				localCostInfluenceSlider.setValue(truncatedDouble);
 				localCostLabel.setText(String.format("%.1f", new_val));
 			}
 		});
@@ -117,6 +132,16 @@ public class configurationWindowController {
 		algorithmComboBox.setItems(optAlgorithm);
 		algorithmComboBox.getSelectionModel().selectFirst();
 
+		// Number of Children Slider
+		numberOfChildrenLabel.setText(String.format("%.0f", numberOfChildrenSlider.getValue()));
+		numberOfChildrenSlider.valueProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> ov,
+					Number old_val, Number new_val) {
+				numberOfChildrenSlider.setValue(new_val.intValue());
+				numberOfChildrenLabel.setText(Integer.toString(new_val.intValue()));
+				}
+		});
+				
 		// Number of Iterations Slider
 		numberOfIterationsLabel.setText(String.format("%.0f", numberOfIterationsSlider.getValue()));
 		numberOfIterationsSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -154,6 +179,12 @@ public class configurationWindowController {
     }
 	
 	@FXML
+	public void handleAbortButtonAction(ActionEvent event) {
+	    Stage stage = (Stage) abortBtn.getScene().getWindow();
+	    stage.close();
+	}
+	
+	@FXML
     private void handleRunBtn(ActionEvent e){
 		try {
 			ConfirmBox confirmBox = new ConfirmBox();
@@ -163,6 +194,7 @@ public class configurationWindowController {
 					"global cost location: " + getGlobalCostLocation() + "\n" +
 					"local cost influence: " + getLocalCostInfluence().toString() + "\n" +
 					"algorithm: " + getAlgorithm() + "\n" +
+					"number of children: " + getNumberOfChildren() + "\n" +
 					"number of iterations: " + getNumberOfIterations().toString() + "\n" +
 					"seed: " + getSeed());
 			if (answer == true){
