@@ -6,9 +6,11 @@ package controller.view;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
+import java.util.Locale;
+import java.util.Random;
 import Utilities.ConfirmBox;
 import controller.MainApplication;
+import experiment.ExperimentGUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -85,24 +87,25 @@ public class configurationWindowController {
 		return algorithmComboBox.getValue();
 	}
 	
-	public int getNumberOfIterations(){
-		return Integer.parseInt(numberOfIterationsLabel.getText());
-	}
-	
-	public int getNumberOfChildren(){
+	public Integer getNumberOfChildren(){
 		return Integer.parseInt(numberOfChildrenLabel.getText());
 	}
+
+	public Integer getNumberOfIterations(){
+		return Integer.parseInt(numberOfIterationsLabel.getText().toString());
+	}
 	
-	public String getSeed(){
+	public Long getSeed(){
 		if(!seedTextField.getText().isEmpty())
-			return seedTextField.getText();
+			return Long.parseLong(seedTextField.getText());
 		else
-			return seedTextField.getPromptText();
+			return Long.parseLong(seedTextField.getPromptText());
 	}
 	
 	////////////////////////////////// Set Desired Defaults ///////////////////////////////////
 	
 	private void setDefaultsConfigurationWindow(){
+		Locale.setDefault(Locale.US);
 		
 		// Data Set Location
 		dataSetLocationTextField.setPromptText("datasets/");
@@ -127,9 +130,10 @@ public class configurationWindowController {
 		// Algorithm combo box
 		ObservableList<String> optAlgorithm = 
 				FXCollections.observableArrayList(
-						"Algorithm 1",
-						"Algorithm 2",
-						"Algorithm 3");
+						"I-EPOS",
+						"Global Gradient",
+						"Individual Gradient",
+						"Adaptive Gradient");
 		algorithmComboBox.setItems(optAlgorithm);
 		algorithmComboBox.getSelectionModel().selectFirst();
 
@@ -154,7 +158,7 @@ public class configurationWindowController {
 		});
 
 		// Seed Text Field
-		seedTextField.setPromptText("default seed");
+		seedTextField.setPromptText("" + new Random().nextLong());
 	}
 	
 	@FXML
@@ -199,7 +203,15 @@ public class configurationWindowController {
 					"number of iterations: " + getNumberOfIterations() + "\n" +
 					"seed: " + getSeed());
 			if (answer == true){
-				
+				ExperimentGUI experiment = new ExperimentGUI();
+				experiment.setAlgorithm(getAlgorithm());
+				experiment.setDataset(getDataSetLocation());
+				experiment.setGlobalCostFunc(getGlobalCostLocation());
+				experiment.setLambda(getLocalCostInfluence());
+				//experiment.setNumChildren();
+				experiment.setNumIterations(getNumberOfIterations());
+				experiment.setSeed(getSeed());
+				experiment.run();
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
