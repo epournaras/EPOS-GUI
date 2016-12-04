@@ -92,7 +92,7 @@ public class configurationWindowController {
 	}
 
 	public Integer getNumberOfIterations(){
-		return Integer.parseInt(numberOfIterationsLabel.getText().toString());
+		return Integer.parseInt(numberOfIterationsLabel.getText());
 	}
 	
 	public Long getSeed(){

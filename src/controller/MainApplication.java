@@ -22,11 +22,16 @@ public class MainApplication extends Application {
 	private AnchorPane reportWindow;
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Configuration");
-        showConfigurationWindow();
-//        showReportWindow();
+	public void start(Stage primaryStage) /*throws Exception */{
+		
+		try {
+			this.primaryStage = primaryStage;
+	        this.primaryStage.setTitle("Configuration");
+	        showConfigurationWindow();
+//	        showReportWindow();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	/**
@@ -69,6 +74,10 @@ public class MainApplication extends Application {
     }
     
 	public static void main(String[] args) {
-        launch(args);
+		try {
+			launch(args);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}       
     }
 }
