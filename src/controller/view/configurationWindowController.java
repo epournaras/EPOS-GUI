@@ -24,6 +24,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 /**
@@ -165,6 +166,7 @@ public class configurationWindowController {
     private void handleBrowseDataSetLocation(ActionEvent e){
     	DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("This is my file ch");
+        directoryChooser.setInitialDirectory(new File("datasets"));
         //Show open file dialog
         File file = directoryChooser.showDialog(null);
 
@@ -176,6 +178,8 @@ public class configurationWindowController {
     private void handleBrowseGlobalCostLocation(ActionEvent e){
     	FileChooser fileChooser = new FileChooser();
     	fileChooser.setTitle("This is my file ch");
+    	fileChooser.setInitialDirectory(new File(getDataSetLocation()));
+    	//fileChooser.getExtensionFilters().add(new ExtensionFilter("target files", ".target", ".csv"));
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
 
@@ -208,10 +212,15 @@ public class configurationWindowController {
 				experiment.setDataset(getDataSetLocation());
 				experiment.setGlobalCostFunc(getGlobalCostLocation());
 				experiment.setLambda(getLocalCostInfluence());
-				//experiment.setNumChildren();
+				experiment.setNumChildren(getNumberOfChildren());
 				experiment.setNumIterations(getNumberOfIterations());
 				experiment.setSeed(getSeed());
+				experiment.onProgressDo(percentComplete -> {
+					//TODO: set progressbar to the given percentage
+				});
 				experiment.run();
+				
+				// TODO: switch to the report window and pass the experiment to the reportWindowController
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();

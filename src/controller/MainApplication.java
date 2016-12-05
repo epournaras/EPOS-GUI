@@ -27,8 +27,8 @@ public class MainApplication extends Application {
 		try {
 			this.primaryStage = primaryStage;
 	        this.primaryStage.setTitle("Configuration");
-	        showConfigurationWindow();
-//	        showReportWindow();
+	        //showConfigurationWindow();
+	        showReportWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -47,7 +47,7 @@ public class MainApplication extends Application {
             // Show the scene containing the configuration window.
             Scene scene = new Scene(configurationWindow);
             primaryStage.setScene(scene);
-            primaryStage.show();      
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
