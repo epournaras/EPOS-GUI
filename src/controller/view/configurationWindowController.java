@@ -122,18 +122,6 @@ public class configurationWindowController {
 		
 		// Data Set Location
 		dataSetLocationTextField.setPromptText("datasets/");
-		dataSetLocationTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmation Dialog");
-			alert.setHeaderText("Confirmation Dialog to change related fields");
-			alert.setContentText("Are you sure you wish to change global"
-					+ " cost location as well as dataset location?");
-
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.OK)
-				globalCostLocationTextField.setPromptText(getDataSetLocation());
-			
-		});
 		
 		// Global Cost Location
 		globalCostLocationTextField.setPromptText(getDataSetLocation());
