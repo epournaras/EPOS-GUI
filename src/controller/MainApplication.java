@@ -6,7 +6,7 @@ package controller;
 import java.io.IOException;
 
 //TODO
-//import experiment.ExperimentGUI;
+import experiment.ExperimentGUI;
 import controller.view.configurationWindowController;
 import controller.view.reportWindowController;
 import javafx.application.Application;
@@ -65,7 +65,7 @@ public class MainApplication extends Application {
      * Shows the report window
      */
     //TODO
-    public void showReportWindow(/*ExperimentGUI experiment*/){
+    public void showReportWindow(ExperimentGUI experiment){
     	try {
     		// Load configuration from fxml file.
             FXMLLoader reportWindowloader = new FXMLLoader();
@@ -79,7 +79,7 @@ public class MainApplication extends Application {
             // Give the "configuration window controller" access to the main.
             reportWindowController rwc = reportWindowloader.getController();
             //TODO
-//            rwc.setExperiment(experiment);
+            rwc.setExperiment(experiment);
             
             
             secondaryStage.setTitle("Report Window");

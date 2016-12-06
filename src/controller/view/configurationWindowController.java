@@ -15,8 +15,8 @@ import Utilities.ExceptionDialog;
 import Utilities.ProgressForm;
 import Utilities.ConfirmBox;
 import controller.MainApplication;
-//import experiments.simulation.ExperimentManyNodes;
-//import experiment.ExperimentGUI;
+//TODO:
+import experiment.ExperimentGUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -44,6 +44,8 @@ import javafx.stage.Stage;
 public class configurationWindowController {
 
 	private MainApplication mainApp;
+	//TODO:
+	private ExperimentGUI experiment = new ExperimentGUI();
 	
 	@FXML
 	private TextField dataSetLocationTextField;
@@ -230,9 +232,6 @@ public class configurationWindowController {
 					"number of iterations: " + getNumberOfIterations() + "\n" +
 					"seed: " + getSeed());
 			if (answer == true){
-				
-			//TODO: switch to the report window and pass the experiment to the reportWindowController
-
 				try {
 					
 					ProgressForm pForm = new ProgressForm("Running...");
@@ -240,18 +239,18 @@ public class configurationWindowController {
 					Task<Void> task = new Task<Void>() {
 						@Override
 						public Void call() throws InterruptedException {
-//							ExperimentGUI experiment = new ExperimentGUI();
-//							experiment.setAlgorithm(getAlgorithm());
-//							experiment.setDataset(getDataSetLocation());
-//							experiment.setGlobalCostFunc(getGlobalCostLocation());
-//							experiment.setLambda(getLocalCostInfluence());
-//							experiment.setNumChildren(getNumberOfChildren());
-//							experiment.setNumIterations(getNumberOfIterations());
-//							experiment.setSeed(getSeed());
-//							experiment.onProgressDo(percentComplete -> {
-//								//TODO: set progressbar to the given percentage
-//							});
-//							experiment.run();
+							//TODO:
+							experiment.setAlgorithm(getAlgorithm());
+							experiment.setDataset(getDataSetLocation());
+							experiment.setGlobalCostFunc(getGlobalCostLocation());
+							experiment.setLambda(getLocalCostInfluence());
+							experiment.setNumChildren(getNumberOfChildren());
+							experiment.setNumIterations(getNumberOfIterations());
+							experiment.setSeed(getSeed());
+							experiment.onProgressDo(percentComplete -> {
+								//TODO: set progressbar to the given percentage
+							});
+							experiment.run();
 							updateProgress(10, 10);
 							return null ;
 						}
@@ -272,7 +271,7 @@ public class configurationWindowController {
 					
 					// run is finished. It's time to open the report window.
 					//TODO
-					mainApp.showReportWindow(/*experiment*/);
+					mainApp.showReportWindow(experiment);
 					
 				} catch (Exception e2) {
 					e2.printStackTrace();

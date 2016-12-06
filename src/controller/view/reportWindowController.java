@@ -4,7 +4,8 @@
 package controller.view;
 
 import controller.MainApplication;
-//import experiment.ExperimentGUI;
+//TODO
+import experiment.ExperimentGUI;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ public class reportWindowController {
 
 	private int iteration;
 	//TODO
-//	private ExperimentGUI experiment;
+	private ExperimentGUI experiment;
 	
 	@FXML 
 	private ImageView imageView1;
@@ -77,9 +78,9 @@ public class reportWindowController {
 	 * 
 	 * @param experiment
 	 */
-//	public void setExperiment(ExperimentGUI experiment){
-//		this.experiment = experiment;
-//	}
+	public void setExperiment(ExperimentGUI experiment){
+		this.experiment = experiment;
+	}
     
     /**
      * Initializes the controller class. This method is automatically called
