@@ -3,10 +3,8 @@
  */
 package controller.view;
 
-import com.sun.java.swing.plaf.windows.resources.windows;
-
 import controller.MainApplication;
-import experiment.ExperimentGUI;
+//import experiment.ExperimentGUI;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +25,8 @@ public class reportWindowController {
 	private MainApplication mainApp;
 
 	private int iteration;
-	private ExperimentGUI experiment;
+	//TODO
+//	private ExperimentGUI experiment;
 	
 	@FXML 
 	private ImageView imageView1;
@@ -44,9 +43,9 @@ public class reportWindowController {
 	
 	@FXML
     private void handleNextBtnAction(ActionEvent e){
-		if(iteration < experiment.getNumIterations()) {
-			setIteration(iteration+1);
-		}
+//		if(iteration < experiment.getNumIterations()) {
+//			setIteration(iteration+1);
+//		}
 	}
 	
 	@FXML
@@ -60,33 +59,27 @@ public class reportWindowController {
 		this.iteration = iteration;
 		iterationLabel.setText("Iteration " + iteration);
 		
-		imageView2.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
-		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
+//		imageView2.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
+//		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
 	}
 	
 	private void initializeView(){
-		// TODO: remove once the experiment is set by the configuration window
-		experiment = new ExperimentGUI();
-		experiment.setNumIterations(10);
-
-		// load the image
-//		Image image1 = new Image(MainApplication.class.getResourceAsStream("view/Images/2.jpg"));
-//	    
-//		System.out.println( "Path: " + getClass().getResource("/controller/view").toExternalForm());
-//		Image image1 = new Image(getClass().getResource("Images/1.png").toExternalForm());
-//		Image image1 = new Image("controller/view/Images/1.png");
-//	    Image image2 = new Image("controller/view/Images/2.jpg");
-//	    Image image3 = new Image("controller/view/Images/3.png");
-	    // simple displays ImageView the image as is
-	    
-//	    imageView1.setImage(image1);
-//	    imageView2.setImage(image2);
-//	    imageView3.setImage(image3);
+		
 		iterationLabel.setAlignment(Pos.CENTER);
-		imageView1.setImage(SwingFXUtils.toFXImage(experiment.getGlobalCostPlot(400, 200), new WritableImage(400, 200)));
+//		imageView1.setImage(SwingFXUtils.toFXImage(experiment.getGlobalCostPlot(400, 200), new WritableImage(400, 200)));
 		setIteration(1);
 	}
 	
+	//TODO
+	/**
+	 * Sets the experiment to GUI experiment 
+	 * specified in configuration window controller
+	 * 
+	 * @param experiment
+	 */
+//	public void setExperiment(ExperimentGUI experiment){
+//		this.experiment = experiment;
+//	}
     
     /**
      * Initializes the controller class. This method is automatically called

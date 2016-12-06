@@ -5,6 +5,10 @@ package controller;
 
 import java.io.IOException;
 
+//TODO
+//import experiment.ExperimentGUI;
+import controller.view.configurationWindowController;
+import controller.view.reportWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +22,7 @@ import javafx.stage.Stage;
 public class MainApplication extends Application {
 	
 	private Stage primaryStage;
+	private Stage secondaryStage = new Stage();
 	private AnchorPane configurationWindow;
 	private AnchorPane reportWindow;
 	
@@ -27,8 +32,7 @@ public class MainApplication extends Application {
 		try {
 			this.primaryStage = primaryStage;
 	        this.primaryStage.setTitle("Configuration");
-	        //showConfigurationWindow();
-	        showReportWindow();
+	        showConfigurationWindow();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
@@ -44,6 +48,10 @@ public class MainApplication extends Application {
             configurationWindowloader.setLocation(MainApplication.class.getResource("view/configurationWindow.fxml"));
             configurationWindow = (AnchorPane) configurationWindowloader.load();
             
+            // Give the "configuration window controller" access to the main.
+            configurationWindowController cwc = configurationWindowloader.getController();
+            cwc.setMainApp(this);
+            
             // Show the scene containing the configuration window.
             Scene scene = new Scene(configurationWindow);
             primaryStage.setScene(scene);
@@ -56,7 +64,8 @@ public class MainApplication extends Application {
     /**
      * Shows the report window
      */
-    private void showReportWindow(){
+    //TODO
+    public void showReportWindow(/*ExperimentGUI experiment*/){
     	try {
     		// Load configuration from fxml file.
             FXMLLoader reportWindowloader = new FXMLLoader();
@@ -65,8 +74,17 @@ public class MainApplication extends Application {
             
             // Show the scene containing the configuration window.
             Scene scene = new Scene(reportWindow);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            primaryStage.close();
+            
+            // Give the "configuration window controller" access to the main.
+            reportWindowController rwc = reportWindowloader.getController();
+            //TODO
+//            rwc.setExperiment(experiment);
+            
+            
+            secondaryStage.setTitle("Report Window");
+            secondaryStage.setScene(scene);
+            secondaryStage.show();
             
 		} catch (Exception e) {
 			e.printStackTrace();

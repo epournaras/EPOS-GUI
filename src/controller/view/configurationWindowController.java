@@ -7,17 +7,27 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
+
+
+import Utilities.ExceptionDialog;
+import Utilities.ProgressForm;
 import Utilities.ConfirmBox;
 import controller.MainApplication;
-import experiment.ExperimentGUI;
+//import experiments.simulation.ExperimentManyNodes;
+//import experiment.ExperimentGUI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -110,9 +120,21 @@ public class configurationWindowController {
 		
 		// Data Set Location
 		dataSetLocationTextField.setPromptText("datasets/");
+		dataSetLocationTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation Dialog");
+			alert.setHeaderText("Confirmation Dialog to change related fields");
+			alert.setContentText("Are you sure you wish to change global"
+					+ " cost location as well as dataset location?");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK)
+				globalCostLocationTextField.setPromptText(getDataSetLocation());
+			
+		});
 		
 		// Global Cost Location
-		globalCostLocationTextField.setPromptText("Some default cost location");
+		globalCostLocationTextField.setPromptText(getDataSetLocation());
 		
 		// Local Cost Influence Slider
 		localCostLabel.setText(String.format("%.1f", localCostInfluenceSlider.getValue()));
@@ -165,7 +187,7 @@ public class configurationWindowController {
 	@FXML
     private void handleBrowseDataSetLocation(ActionEvent e){
     	DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("This is my file ch");
+        directoryChooser.setTitle("Dataset Location");
         directoryChooser.setInitialDirectory(new File("datasets"));
         //Show open file dialog
         File file = directoryChooser.showDialog(null);
@@ -177,9 +199,10 @@ public class configurationWindowController {
 	@FXML
     private void handleBrowseGlobalCostLocation(ActionEvent e){
     	FileChooser fileChooser = new FileChooser();
-    	fileChooser.setTitle("This is my file ch");
+    	fileChooser.setTitle("Global Cost Location");
     	fileChooser.setInitialDirectory(new File(getDataSetLocation()));
-    	//fileChooser.getExtensionFilters().add(new ExtensionFilter("target files", ".target", ".csv"));
+    	fileChooser.getExtensionFilters().addAll(new ExtensionFilter("(.csv) (.target) files", "*.target", "*.csv"));
+    	
         //Show open file dialog
         File file = fileChooser.showOpenDialog(null);
 
@@ -207,20 +230,55 @@ public class configurationWindowController {
 					"number of iterations: " + getNumberOfIterations() + "\n" +
 					"seed: " + getSeed());
 			if (answer == true){
-				ExperimentGUI experiment = new ExperimentGUI();
-				experiment.setAlgorithm(getAlgorithm());
-				experiment.setDataset(getDataSetLocation());
-				experiment.setGlobalCostFunc(getGlobalCostLocation());
-				experiment.setLambda(getLocalCostInfluence());
-				experiment.setNumChildren(getNumberOfChildren());
-				experiment.setNumIterations(getNumberOfIterations());
-				experiment.setSeed(getSeed());
-				experiment.onProgressDo(percentComplete -> {
-					//TODO: set progressbar to the given percentage
-				});
-				experiment.run();
 				
-				// TODO: switch to the report window and pass the experiment to the reportWindowController
+			//TODO: switch to the report window and pass the experiment to the reportWindowController
+
+				try {
+					
+					ProgressForm pForm = new ProgressForm("Running...");
+
+					Task<Void> task = new Task<Void>() {
+						@Override
+						public Void call() throws InterruptedException {
+//							ExperimentGUI experiment = new ExperimentGUI();
+//							experiment.setAlgorithm(getAlgorithm());
+//							experiment.setDataset(getDataSetLocation());
+//							experiment.setGlobalCostFunc(getGlobalCostLocation());
+//							experiment.setLambda(getLocalCostInfluence());
+//							experiment.setNumChildren(getNumberOfChildren());
+//							experiment.setNumIterations(getNumberOfIterations());
+//							experiment.setSeed(getSeed());
+//							experiment.onProgressDo(percentComplete -> {
+//								//TODO: set progressbar to the given percentage
+//							});
+//							experiment.run();
+							updateProgress(10, 10);
+							return null ;
+						}
+					};
+
+					// binds progress of progress bars to progress of task:
+					pForm.activateProgressBar(task);
+
+					// In real life this method would get the result of the task
+					// and update the UI based on its value:
+					task.setOnSucceeded(event -> {
+						pForm.getDialogStage().close();
+					});
+					pForm.getDialogStage().show();
+
+					Thread thread = new Thread(task);
+					thread.start();
+					
+					// run is finished. It's time to open the report window.
+					//TODO
+					mainApp.showReportWindow(/*experiment*/);
+					
+				} catch (Exception e2) {
+					e2.printStackTrace();
+					ExceptionDialog exDialog = new ExceptionDialog();
+					exDialog.display(e2);
+				}
 			}
 		} catch (Exception e2) {
 			e2.printStackTrace();
