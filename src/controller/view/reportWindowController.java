@@ -44,9 +44,9 @@ public class reportWindowController {
 	
 	@FXML
     private void handleNextBtnAction(ActionEvent e){
-//		if(iteration < experiment.getNumIterations()) {
-//			setIteration(iteration+1);
-//		}
+		if(iteration < experiment.getNumIterations()) {
+			setIteration(iteration+1);
+		}
 	}
 	
 	@FXML
@@ -60,15 +60,12 @@ public class reportWindowController {
 		this.iteration = iteration;
 		iterationLabel.setText("Iteration " + iteration);
 		
-//		imageView2.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
-//		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
+		imageView2.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
+		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
 	}
 	
 	private void initializeView(){
-		
 		iterationLabel.setAlignment(Pos.CENTER);
-//		imageView1.setImage(SwingFXUtils.toFXImage(experiment.getGlobalCostPlot(400, 200), new WritableImage(400, 200)));
-		setIteration(1);
 	}
 	
 	//TODO
@@ -80,6 +77,8 @@ public class reportWindowController {
 	 */
 	public void setExperiment(ExperimentGUI experiment){
 		this.experiment = experiment;
+		imageView1.setImage(SwingFXUtils.toFXImage(experiment.getGlobalCostPlot(400, 200), new WritableImage(400, 200)));
+		setIteration(1);
 	}
     
     /**

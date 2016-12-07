@@ -35,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import jdk.nashorn.internal.runtime.regexp.joni.Warnings;
 import javafx.stage.Stage;
 
 /**
@@ -227,7 +228,7 @@ public class configurationWindowController {
 					Task<Void> task = new Task<Void>() {
 						@Override
 						public Void call() throws InterruptedException {
-							//TODO:
+							updateProgress(0, 1);
 							experiment.setAlgorithm(getAlgorithm());
 							experiment.setDataset(getDataSetLocation());
 							experiment.setGlobalCostFunc(getGlobalCostLocation());
@@ -236,11 +237,11 @@ public class configurationWindowController {
 							experiment.setNumIterations(getNumberOfIterations());
 							experiment.setSeed(getSeed());
 							experiment.onProgressDo(percentComplete -> {
-								//TODO: set progressbar to the given percentage
+								updateProgress(percentComplete, 1);
 							});
 							experiment.run();
-							updateProgress(10, 10);
-							return null ;
+							updateProgress(1, 1);
+							return null;
 						}
 					};
 
@@ -251,16 +252,17 @@ public class configurationWindowController {
 					// and update the UI based on its value:
 					task.setOnSucceeded(event -> {
 						pForm.getDialogStage().close();
+						
+						// run is finished. It's time to open the report window.
+						mainApp.showReportWindow(experiment);
+					});
+					task.setOnFailed(event -> {
+						pForm.getDialogStage().close();
 					});
 					pForm.getDialogStage().show();
 
 					Thread thread = new Thread(task);
 					thread.start();
-					
-					// run is finished. It's time to open the report window.
-					//TODO
-					mainApp.showReportWindow(experiment);
-					
 				} catch (Exception e2) {
 					e2.printStackTrace();
 					ExceptionDialog exDialog = new ExceptionDialog();

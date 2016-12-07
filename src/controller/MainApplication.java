@@ -26,6 +26,12 @@ public class MainApplication extends Application {
 	private AnchorPane configurationWindow;
 	private AnchorPane reportWindow;
 	
+	private ExperimentGUI experiment;
+	
+	public ExperimentGUI getExperiment() {
+		return experiment;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) /*throws Exception */{
 		
@@ -66,6 +72,8 @@ public class MainApplication extends Application {
      */
     //TODO
     public void showReportWindow(ExperimentGUI experiment){
+    	this.experiment = experiment;
+    	
     	try {
     		// Load configuration from fxml file.
             FXMLLoader reportWindowloader = new FXMLLoader();
@@ -78,9 +86,7 @@ public class MainApplication extends Application {
             
             // Give the "configuration window controller" access to the main.
             reportWindowController rwc = reportWindowloader.getController();
-            //TODO
             rwc.setExperiment(experiment);
-            
             
             secondaryStage.setTitle("Report Window");
             secondaryStage.setScene(scene);
