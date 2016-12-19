@@ -33,7 +33,7 @@ public class MainApplication extends Application {
 	}
 	
 	@Override
-	public void start(Stage primaryStage) /*throws Exception */{
+	public void start(Stage primaryStage){
 		
 		try {
 			this.primaryStage = primaryStage;

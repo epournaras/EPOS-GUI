@@ -12,10 +12,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
 
 /**
  * @author melikaayoughi
@@ -30,11 +28,13 @@ public class reportWindowController {
 	private ExperimentGUI experiment;
 	
 	@FXML 
-	private ImageView imageView1;
+	private ImageView imageView1;	// 1 is top left --> global cost
 	@FXML 
-	private ImageView imageView2;
+	private ImageView imageView2;	// 2 is top right --> average local cost
 	@FXML 
-	private ImageView imageView3;
+	private ImageView imageView3;	// 3 is buttom left --> global response
+	@FXML
+	private ImageView imageView4;	// 4 is buttom right --> network
 	@FXML
 	private Button prevButton;
 	@FXML
@@ -60,8 +60,10 @@ public class reportWindowController {
 		this.iteration = iteration;
 		iterationLabel.setText("Iteration " + iteration);
 		
-		imageView2.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
-		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
+		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
+		//TODO I don't know which one is get agent changes plot
+		//TODO also add imageView2
+		imageView4.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
 	}
 	
 	private void initializeView(){

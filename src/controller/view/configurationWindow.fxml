@@ -12,14 +12,15 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="547.0" prefWidth="617.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.view.configurationWindowController">
    <children>
-      <GridPane layoutX="44.0" layoutY="40.0" prefHeight="81.0" prefWidth="492.0">
+      <GridPane layoutX="50.0" layoutY="41.0" prefHeight="83.0" prefWidth="551.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="141.0" minWidth="10.0" prefWidth="140.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="246.0" minWidth="10.0" prefWidth="223.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="77.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="144.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="280.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="109.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
@@ -42,7 +43,7 @@
             </Button>
          </children>
       </GridPane>
-      <GridPane layoutX="50.0" layoutY="163.0" prefHeight="267.0" prefWidth="500.0">
+      <GridPane layoutX="50.0" layoutY="163.0" prefHeight="275.0" prefWidth="551.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="153.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="287.0" minWidth="10.0" prefWidth="268.0" />
@@ -84,13 +85,22 @@
                   <Tooltip text="I have no idea!" />
                </tooltip>
             </TextField>
-            <Label fx:id="localCostLabel" text="Label" translateX="20.0" translateY="-10.0" GridPane.columnIndex="2" />
-            <Label fx:id="numberOfIterationsLabel" text="Label" translateX="20.0" translateY="-10.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="localCostLabel" prefHeight="29.0" prefWidth="57.0" text="Label" translateX="35.0" translateY="-10.0" GridPane.columnIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label fx:id="numberOfIterationsLabel" prefHeight="24.0" prefWidth="57.0" text="Label" translateX="35.0" translateY="-10.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
             <Label text="Number of Children" translateY="-10.0" GridPane.rowIndex="2" />
-            <Label fx:id="numberOfChildrenLabel" text="Label" translateX="20.0" translateY="-10.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="numberOfChildrenLabel" prefHeight="21.0" prefWidth="61.0" text="Label" translateX="35.0" translateY="-10.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
          </children>
       </GridPane>
-      <ButtonBar layoutX="347.0" layoutY="468.0" prefHeight="55.0" prefWidth="203.0">
+      <ButtonBar layoutX="379.0" layoutY="463.0" prefHeight="55.0" prefWidth="203.0">
          <buttons>
             <Button fx:id="abortBtn" mnemonicParsing="false" onAction="#handleAbortButtonAction" prefHeight="37.0" prefWidth="87.0" text="Abort">
                <tooltip>
