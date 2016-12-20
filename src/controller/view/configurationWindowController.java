@@ -122,12 +122,13 @@ public class configurationWindowController {
 		Locale.setDefault(Locale.US);
 		
 		// Data Set Location
-		dataSetLocationTextField.setPromptText("datasets/");
+		dataSetLocationTextField.setPromptText("datasets" + File.separatorChar + "gaussian");
 		
 		// Global Cost Location
-		globalCostLocationTextField.setPromptText(getDataSetLocation());
+		globalCostLocationTextField.setPromptText(getDataSetLocation() + File.separatorChar + "zero.target");
 		
 		// Local Cost Influence Slider
+		localCostInfluenceSlider.setValue(0.1);
 		localCostLabel.setText(String.format("%.1f", localCostInfluenceSlider.getValue()));
 		localCostInfluenceSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov,
@@ -162,6 +163,7 @@ public class configurationWindowController {
 		});
 				
 		// Number of Iterations Slider
+		numberOfIterationsSlider.setValue(15);
 		numberOfIterationsLabel.setText(String.format("%.0f", numberOfIterationsSlider.getValue()));
 		numberOfIterationsSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov,
@@ -183,8 +185,10 @@ public class configurationWindowController {
         //Show open file dialog
         File file = directoryChooser.showDialog(null);
 
-       if(file!=null)
+       if(file!=null) {
             dataSetLocationTextField.setText(file.getPath());
+    		globalCostLocationTextField.setText(getDataSetLocation() + File.separatorChar + "zero.target");
+       }
     }
 	
 	@FXML

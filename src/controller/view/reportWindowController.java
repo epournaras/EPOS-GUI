@@ -23,18 +23,16 @@ public class reportWindowController {
 
 	private MainApplication mainApp;
 
+	private int imgSize = 250;
 	private int iteration;
-	//TODO
 	private ExperimentGUI experiment;
 	
 	@FXML 
-	private ImageView imageView1;	// 1 is top left --> global cost
+	private ImageView imageView1;	// 1 is top left --> global cost, average local cost
 	@FXML 
-	private ImageView imageView2;	// 2 is top right --> average local cost
-	@FXML 
-	private ImageView imageView3;	// 3 is buttom left --> global response
+	private ImageView imageView2;	// 2 is bottom left --> global response
 	@FXML
-	private ImageView imageView4;	// 4 is buttom right --> network
+	private ImageView imageView3;	// 3 is bottom right --> network
 	@FXML
 	private Button prevButton;
 	@FXML
@@ -60,17 +58,14 @@ public class reportWindowController {
 		this.iteration = iteration;
 		iterationLabel.setText("Iteration " + iteration);
 		
-		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(200, 200, iteration), new WritableImage(200, 200)));
-		//TODO I don't know which one is get agent changes plot
-		//TODO also add imageView2
-		imageView4.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(200, 200, iteration), new WritableImage(200, 200)));
+		imageView2.setImage(SwingFXUtils.toFXImage(experiment.getGlobalResponsePlot(imgSize, imgSize, iteration), new WritableImage(imgSize, imgSize)));
+		imageView3.setImage(SwingFXUtils.toFXImage(experiment.getAgentChangesPlot(imgSize, imgSize, iteration), new WritableImage(imgSize, imgSize)));
 	}
 	
 	private void initializeView(){
 		iterationLabel.setAlignment(Pos.CENTER);
 	}
 	
-	//TODO
 	/**
 	 * Sets the experiment to GUI experiment 
 	 * specified in configuration window controller
@@ -79,7 +74,7 @@ public class reportWindowController {
 	 */
 	public void setExperiment(ExperimentGUI experiment){
 		this.experiment = experiment;
-		imageView1.setImage(SwingFXUtils.toFXImage(experiment.getGlobalCostPlot(400, 200), new WritableImage(400, 200)));
+		imageView1.setImage(SwingFXUtils.toFXImage(experiment.getGlobalCostPlot(2*imgSize, imgSize), new WritableImage(2*imgSize, imgSize)));
 		setIteration(1);
 	}
     
